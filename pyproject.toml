@@ -1,0 +1,53 @@
+# planradius packaging — Copyright 2026 Baysöz Labs <baysozlabs@proton.me>
+# Attribution: Baysöz Labs <baysozlabs@proton.me>
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "planradius"
+version = "1.0.0"
+description = "Deterministic Terraform/OpenTofu plan blast-radius and IAM escalation gate — Baysöz Labs <baysozlabs@proton.me>"
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Baysöz Labs", email = "baysozlabs@proton.me" }]
+maintainers = [{ name = "Baysöz Labs", email = "baysozlabs@proton.me" }]
+keywords = ["terraform", "opentofu", "devops", "security", "blast-radius", "iam", "sarif"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.scripts]
+planradius = "planradius.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yazilimbaysoz-svg/planradius"
+Issues = "https://github.com/yazilimbaysoz-svg/planradius/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+exclude = [".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "S", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S603", "S607"]

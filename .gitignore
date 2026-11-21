@@ -1,0 +1,21 @@
+# planradius .gitignore — Copyright 2026 Baysöz Labs <baysozlabs@proton.me>
+# Attribution: Baysöz Labs <baysozlabs@proton.me>
+
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.semgrep/
+.coverage
+coverage.xml
+htmlcov/
+*.sarif
+*.log
+.DS_Store
+.idea/
+.vscode/

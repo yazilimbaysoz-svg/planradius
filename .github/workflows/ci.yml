@@ -1,0 +1,49 @@
+# CI — planradius — Copyright 2026 Baysöz Labs <baysozlabs@proton.me>
+# Attribution: Baysöz Labs <baysozlabs@proton.me>
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality-gate:
+    name: Zero-defect quality gate — Baysöz Labs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install uv and Python 3.13
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
+        with:
+          python-version: "3.13"
+
+      - name: Install project and gate tooling
+        run: |
+          uv venv
+          uv pip install -e .
+          uv pip install pytest ruff semgrep
+
+      - name: Tests
+        run: uv run pytest -q
+
+      - name: Static analysis (ruff)
+        run: uv run ruff check --select E,F,W,S,B .
+
+      - name: Security analysis (semgrep)
+        run: uv run semgrep --config p/default --error .
+
+      - name: Live CLI smoke gate
+        run: uv run planradius analyze --plan examples/plan.json --format json --fail-on none > /dev/null
+
+      - name: Attribution gate
+        run: |
+          uv run planradius --version | grep -F 'Baysöz Labs <baysozlabs@proton.me>'
+          uv run planradius --help | grep -F 'Baysöz Labs <baysozlabs@proton.me>'

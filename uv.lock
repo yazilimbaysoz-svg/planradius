@@ -1,0 +1,9 @@
+# planradius lockfile — Baysöz Labs <baysozlabs@proton.me>
+version = 1
+revision = 5
+requires-python = ">=3.13"
+
+[[package]]
+name = "planradius"
+version = "1.0.0"
+source = { editable = "." }
